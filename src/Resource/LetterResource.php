@@ -20,7 +20,7 @@ final class LetterResource
         private AddressResource $to,
         private int $pageCount,
         private int $sheetCount,
-        private ?FileResource $fileResource,
+        private FileResource|string|null $fileResource,
         private ?string $sourceFiletype,
         private string $mode,
         private string $color,
@@ -98,7 +98,7 @@ final class LetterResource
         return $this->sheetCount;
     }
 
-    public function getFileResource(): ?FileResource
+    public function getFileResource(): FileResource|string|null
     {
         return $this->fileResource;
     }
