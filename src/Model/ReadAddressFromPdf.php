@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Model;
 
-class ReadAddressFromPdf implements \JsonSerializable
+final class ReadAddressFromPdf implements \JsonSerializable
 {
     public function __construct(
         private bool $active,

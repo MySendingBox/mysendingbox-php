@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class FileResource
+final class FileResource
 {
     public function __construct(
         private string $_id,

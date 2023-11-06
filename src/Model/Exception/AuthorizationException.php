@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class AuthorizationException extends Exception
+final class AuthorizationException extends Exception
 {
 }

@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class NetworkErrorException extends Exception
+final class NetworkErrorException extends Exception
 {
 }

@@ -6,7 +6,7 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class TransformerException extends Exception
+final class TransformerException extends Exception
 {
     public function __construct(
         string $field = 'unspecified',

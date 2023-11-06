@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class ResourceNotFoundException extends Exception
+final class ResourceNotFoundException extends Exception
 {
 }

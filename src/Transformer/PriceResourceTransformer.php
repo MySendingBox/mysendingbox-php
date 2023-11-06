@@ -7,10 +7,11 @@ namespace Mysendingbox\Transformer;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Resource\PriceResource;
 
-class PriceResourceTransformer extends AbstractTransformer
+final class PriceResourceTransformer extends AbstractTransformer
 {
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function transform(array $data): PriceResource

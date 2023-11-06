@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class PriceResource
+final class PriceResource
 {
     public function __construct(
         private string $pack,
