@@ -12,7 +12,9 @@ use Mysendingbox\Model\Exception\ResourceNotFoundException;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Model\ReadAddressFromPdf;
 use Mysendingbox\Resource\LetterResource;
+use Mysendingbox\Resource\LettersRequest;
 use Mysendingbox\Transformer\LetterResourceTransformer;
+use Mysendingbox\Transformer\LettersRequestTransformer;
 
 final class MysendingboxClient extends MysendingboxClientBase
 {
@@ -131,8 +133,30 @@ final class MysendingboxClient extends MysendingboxClientBase
         $data = $this->request('GET', sprintf('letters/%s', $id));
 
         if (!is_array($data)) {
-            throw new TransformerException();
+            throw new TransformerException(expected: 'array', value: $data);
         }
         return LetterResourceTransformer::transform($data);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     *
+     * @return array<LetterResource>
+     *
+     * @throws InternalErrorException
+     * @throws ResourceNotFoundException
+     * @throws NetworkErrorException
+     * @throws AuthorizationException
+     * @throws TransformerException
+     */
+    public function getAllLetters(array $query = []): LettersRequest
+    {
+        $data = $this->request('GET', 'letters', $query);
+
+        if (!is_array($data)) {
+            throw new TransformerException(expected: 'array', value: $data);
+        }
+
+        return LettersRequestTransformer::transform($data);
     }
 }

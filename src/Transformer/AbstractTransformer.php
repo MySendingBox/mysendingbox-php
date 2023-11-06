@@ -123,6 +123,22 @@ abstract class AbstractTransformer
     /**
      * @param array<string, mixed> $data
      *
+     * @return array<string, mixed>
+     *
+     * @throws TransformerException
+     */
+    public static function getAsObject(array $data, string $key): array
+    {
+        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
+            throw new TransformerException($key, 'array', $data[$key] ?? null);
+        }
+
+        return $data[$key];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
      * @return array<string, mixed>|null
      *
      * @throws TransformerException
@@ -175,10 +191,13 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsFileResourceOrNull(array $data, string $key): FileResource|null
+    public static function getAsFileResourceOrNull(array $data, string $key): FileResource|string|null
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
+        }
+        if (is_string($data[$key])) {
+            return $data[$key];
         }
         if (!is_array($data[$key])) {
             throw new TransformerException($key, 'array|null', $data[$key]);
