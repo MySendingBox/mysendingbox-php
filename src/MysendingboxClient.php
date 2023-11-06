@@ -16,6 +16,28 @@ use Mysendingbox\Transformer\LetterResourceTransformer;
 
 class MysendingboxClient extends MysendingboxClientBase
 {
+    public const POSTAGE_SPEED_EXPRESS = 'express';
+    public const POSTAGE_SPEED_D = 'D';
+    public const POSTAGE_SPEED_D1 = 'D1';
+    public const POSTAGE_TYPE_ECOPLI = 'ecopli';
+    public const POSTAGE_TYPE_PRIORITAIRE = 'prioritaire';
+    public const POSTAGE_TYPE_LR = 'lr';
+    public const POSTAGE_TYPE_LRAR = 'lrar';
+    public const ELECTRONIC_STATUS_INDIVIDUAL = 'individual';
+    public const ELECTRONIC_STATUS_PROFESSIONAL = 'professional';
+    public const COLOR_BW = 'bw';
+    public const COLOR_COLOR = 'color';
+    public const SOURCE_FILE_TYPE_FILE = 'file';
+    public const SOURCE_FILE_TYPE_TEMPLATE_ID = 'template_id';
+    public const SOURCE_FILE_TYPE_REMOTE = 'remote';
+    public const SOURCE_FILE_TYPE_HTML = 'html';
+    public const ADDRESS_PLACEMENT_FIRST_PAGE = 'first_page';
+    public const ADDRESS_PLACEMENT_INSERT_BLANK_PAGE = 'insert_blank_page';
+    public const ENVELOPE_C4 = 'c4';
+    public const ENVELOPE_C6 = 'c6';
+    public const ENVELOPE_WINDOW_SIMPLE = 'simple';
+    public const ENVELOPE_WINDOW_DOUBLE = 'double';
+
     public function __construct(
         string $apiKey,
         ?string $version = null,
@@ -24,6 +46,88 @@ class MysendingboxClient extends MysendingboxClientBase
         bool $verifySsl = true,
     ) {
         parent::__construct($apiKey, $version, $apiUrl, $timeout, $verifySsl);
+    }
+
+    /**
+     * @param array<string, mixed> $variables
+     * @param array<string, mixed> $metadata
+     *
+     * @throws AuthorizationException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     * @throws TransformerException
+     */
+    public function createPaperLetter(
+        AddressPaper $to,
+        string $color,
+        string $postageType,
+        // TODO define $sourceFile PHP type hint string or file
+        string $sourceFile,
+        string $sourceFileType,
+        // Not required
+        ?string $description = null,
+        ?AddressPaper $from = null,
+        ?string $sourceFile2 = null,
+        ?string $sourceFileType2 = null,
+        ?string $sourceFile3 = null,
+        ?string $sourceFileType3 = null,
+        ?string $sourceFile4 = null,
+        ?string $sourceFileType4 = null,
+        ?string $sourceFile5 = null,
+        ?string $sourceFileType5 = null,
+        ?bool $bothSides = null,
+        ?bool $staple = null,
+        ?\DateTimeInterface $sendDate = null,
+        ?string $addressPlacement = null,
+        ?string $postageSpeed = null,
+        ?int $pdfMargin = null,
+        ?ReadAddressFromPdf $readAddressFromPdf = null,
+        ?bool $manageDeliveryProof = null,
+        ?bool $manageReturnedMail = null,
+        ?string $envelope = null,
+        ?string $envelopeWindow = null,
+        ?bool $printSenderAddress = null,
+        ?array $variables = null,
+        ?array $metadata = null,
+    ): LetterResource {
+        $body = [];
+        $body['description'] = $description;
+        $body['to'] = $to->jsonSerialize();
+        $body['from'] = $from?->jsonSerialize();
+        $body['color'] = $color;
+        $body['postage_type'] = $postageType;
+        $body['source_file'] = $sourceFile;
+        $body['source_file_type'] = $sourceFileType;
+        $body['source_file_2'] = $sourceFile2;
+        $body['source_file_2_type'] = $sourceFileType2;
+        $body['source_file_3'] = $sourceFile3;
+        $body['source_file_3_type'] = $sourceFileType3;
+        $body['source_file_4'] = $sourceFile4;
+        $body['source_file_4_type'] = $sourceFileType4;
+        $body['source_file_5'] = $sourceFile5;
+        $body['source_file_5_type'] = $sourceFileType5;
+        $body['both_sides'] = $bothSides;
+        $body['staple'] = $staple;
+        $body['send_date'] = $sendDate?->format('Y-m-d');
+        $body['address_placement'] = $addressPlacement;
+        $body['postage_speed'] = $postageSpeed;
+        $body['pdf_margin'] = $pdfMargin;
+        $body['read_address_from_pdf'] = $readAddressFromPdf?->jsonSerialize();
+        $body['manage_delivery_proof'] = $manageDeliveryProof;
+        $body['manage_returned_mail'] = $manageReturnedMail;
+        $body['envelope'] = $envelope;
+        $body['envelope_window'] = $envelopeWindow;
+        $body['print_s  ender_address'] = $printSenderAddress;
+        $body['variables'] = $variables;
+        $body['metadata'] = $metadata;
+
+        $data = $this->request('POST', 'letters', $body);
+
+        if (!is_array($data)) {
+            throw new TransformerException();
+        }
+        return LetterResourceTransformer::transform($data);
     }
 
     /**
