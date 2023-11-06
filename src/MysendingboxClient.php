@@ -6,6 +6,7 @@ namespace Mysendingbox;
 
 use Mysendingbox\Model\AddressPaper;
 use Mysendingbox\Model\Exception\AuthorizationException;
+use Mysendingbox\Model\Exception\BadRequestException;
 use Mysendingbox\Model\Exception\InternalErrorException;
 use Mysendingbox\Model\Exception\NetworkErrorException;
 use Mysendingbox\Model\Exception\ResourceNotFoundException;
@@ -45,6 +46,7 @@ final class MysendingboxClient extends MysendingboxClientBase
      * @param array<string, mixed> $metadata
      *
      * @throws AuthorizationException
+     * @throws BadRequestException
      * @throws InternalErrorException
      * @throws NetworkErrorException
      * @throws ResourceNotFoundException
@@ -122,10 +124,11 @@ final class MysendingboxClient extends MysendingboxClientBase
     }
 
     /**
-     * @throws InternalErrorException
-     * @throws ResourceNotFoundException
-     * @throws NetworkErrorException
      * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
      * @throws TransformerException
      */
     public function getLetter(string $id): LetterResource
@@ -139,14 +142,29 @@ final class MysendingboxClient extends MysendingboxClientBase
     }
 
     /**
+     * @return true If letter has been cancelled or throw bad request otherwise
+     *
+     * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     */
+    public function cancelLetter(string $id): bool
+    {
+        $this->request('DELETE', sprintf('letters/%s', $id));
+
+        return true;
+    }
+
+    /**
      * @param array<string, mixed> $query
      *
-     * @return array<LetterResource>
-     *
-     * @throws InternalErrorException
-     * @throws ResourceNotFoundException
-     * @throws NetworkErrorException
      * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
      * @throws TransformerException
      */
     public function getAllLetters(array $query = []): LettersRequest
