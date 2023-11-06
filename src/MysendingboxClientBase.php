@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
 use Mysendingbox\Model\Exception\AuthorizationException;
+use Mysendingbox\Model\Exception\BadRequestException;
 use Mysendingbox\Model\Exception\InternalErrorException;
 use Mysendingbox\Model\Exception\NetworkErrorException;
 use Mysendingbox\Model\Exception\ResourceNotFoundException;
@@ -119,6 +120,8 @@ abstract class MysendingboxClientBase
         switch ($response->getStatusCode()) {
             case 200:
                 return json_decode($response->getBody()->__toString(), true);
+            case 400:
+                throw new BadRequestException($responseErrorBody, 400, $previous);
             case 401:
                 throw new AuthorizationException('Unauthorized', 401, $previous);
             case 403:
@@ -131,7 +134,7 @@ abstract class MysendingboxClientBase
             case 404:
                 throw new ResourceNotFoundException($responseErrorBody, 404, $previous);
             default:
-                throw new InternalErrorException('Unexpected error code from API', $response->getStatusCode(), $previous);
+                throw new InternalErrorException('Unexpected error code from API : '.$responseErrorBody, $response->getStatusCode(), $previous);
         }
     }
 
