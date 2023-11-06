@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class LetterResource
+final class LetterResource
 {
     /**
      * @param array<TrackingEventResource> $trackingEvents

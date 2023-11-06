@@ -50,6 +50,7 @@ abstract class MysendingboxClientBase
 
     /**
      * @param array<string, mixed> $data
+     *
      * @return array<string, mixed>
      */
     protected function clearNullValuesRecursively(array $data): array
@@ -134,12 +135,17 @@ abstract class MysendingboxClientBase
             case 404:
                 throw new ResourceNotFoundException($responseErrorBody, 404, $previous);
             default:
-                throw new InternalErrorException('Unexpected error code from API : '.$responseErrorBody, $response->getStatusCode(), $previous);
+                throw new InternalErrorException(
+                    'Unexpected error code from API : '.$responseErrorBody,
+                    $response->getStatusCode(),
+                    $previous
+                );
         }
     }
 
     /**
      * @param array<string, mixed> $body
+     *
      * @return array<string, mixed>
      */
     protected static function flattenArray(array $body, string $prefix = ''): array
@@ -160,6 +166,7 @@ abstract class MysendingboxClientBase
 
     /**
      * @param array<string, mixed> $body
+     *
      * @return array<array<string, mixed>>
      */
     protected static function formatMultipartData(array $body): array

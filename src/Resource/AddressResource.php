@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class AddressResource
+final class AddressResource
 {
     public function __construct(
         private ?string $name,

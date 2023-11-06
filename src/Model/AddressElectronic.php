@@ -6,7 +6,7 @@ namespace Mysendingbox\Model;
 
 use Mysendingbox\MysendingboxClient;
 
-class AddressElectronic implements \JsonSerializable
+final class AddressElectronic implements \JsonSerializable
 {
     public function __construct(
         private string $email,

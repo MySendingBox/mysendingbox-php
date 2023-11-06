@@ -7,10 +7,11 @@ namespace Mysendingbox\Transformer;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Resource\LetterResource;
 
-class LetterResourceTransformer extends AbstractTransformer
+final class LetterResourceTransformer extends AbstractTransformer
 {
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function transform(array $data): LetterResource

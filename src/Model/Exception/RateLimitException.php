@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class RateLimitException extends Exception
+final class RateLimitException extends Exception
 {
 }

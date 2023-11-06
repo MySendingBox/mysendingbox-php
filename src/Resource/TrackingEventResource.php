@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class TrackingEventResource
+final class TrackingEventResource
 {
     public function __construct(
         private string $id,

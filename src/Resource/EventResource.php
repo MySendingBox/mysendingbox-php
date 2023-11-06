@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Resource;
 
-class EventResource
+final class EventResource
 {
     public function __construct(
         private string $id,

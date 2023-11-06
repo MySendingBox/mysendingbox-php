@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class UnexpectedErrorException extends Exception
+final class UnexpectedErrorException extends Exception
 {
 }

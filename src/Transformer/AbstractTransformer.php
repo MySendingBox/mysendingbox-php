@@ -15,6 +15,7 @@ abstract class AbstractTransformer
 {
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsBool(array $data, string $key): bool
@@ -28,6 +29,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsBoolOrNull(array $data, string $key): bool|null
@@ -44,6 +46,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsString(array $data, string $key): string
@@ -57,6 +60,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsStringOrNull(array $data, string $key): string|null
@@ -73,6 +77,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsInt(array $data, string $key): int
@@ -86,6 +91,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsIntOrNull(array $data, string $key): int|null
@@ -102,6 +108,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsNumber(array $data, string $key): int|float
@@ -115,20 +122,10 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
-     * @return array<string, mixed>
-     */
-    public static function getAsObject(array $data, string $key): array
-    {
-        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
-            throw new TransformerException($key, 'array', $data[$key] ?? null);
-        }
-
-        return $data[$key];
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     * @return array<string, mixed>
+     *
+     * @return array<string, mixed>|null
+     *
+     * @throws TransformerException
      */
     public static function getAsObjectOrNull(array $data, string $key): array|null
     {
@@ -144,6 +141,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsAddressResource(array $data, string $key): AddressResource
@@ -157,6 +155,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsAddressResourceOrNull(array $data, string $key): AddressResource|null
@@ -173,19 +172,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
-     * @throws TransformerException
-     */
-    public static function getAsFileResource(array $data, string $key): FileResource
-    {
-        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
-            throw new TransformerException($key, 'array', $data[$key] ?? null);
-        }
-
-        return FileResourceTransformer::transform($data[$key]);
-    }
-
-    /**
-     * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsFileResourceOrNull(array $data, string $key): FileResource|null
@@ -202,6 +189,7 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function getAsPriceResource(array $data, string $key): PriceResource
@@ -215,7 +203,9 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @return array<TrackingEventResource>
+     *
      * @throws TransformerException
      */
     public static function getAsTrackingEventResourceArray(array $data, string $key): array
@@ -238,7 +228,9 @@ abstract class AbstractTransformer
 
     /**
      * @param array<string, mixed> $data
+     *
      * @return array<EventResource>
+     *
      * @throws TransformerException
      */
     public static function getAsEventResourceArray(array $data, string $key): array

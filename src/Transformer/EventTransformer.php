@@ -7,10 +7,11 @@ namespace Mysendingbox\Transformer;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Resource\EventResource;
 
-class EventTransformer extends AbstractTransformer
+final class EventTransformer extends AbstractTransformer
 {
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function transform(array $data): EventResource

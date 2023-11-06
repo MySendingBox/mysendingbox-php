@@ -14,7 +14,7 @@ use Mysendingbox\Model\ReadAddressFromPdf;
 use Mysendingbox\Resource\LetterResource;
 use Mysendingbox\Transformer\LetterResourceTransformer;
 
-class MysendingboxClient extends MysendingboxClientBase
+final class MysendingboxClient extends MysendingboxClientBase
 {
     public const POSTAGE_SPEED_EXPRESS = 'express';
     public const POSTAGE_SPEED_D = 'D';
@@ -38,16 +38,6 @@ class MysendingboxClient extends MysendingboxClientBase
     public const ENVELOPE_WINDOW_SIMPLE = 'simple';
     public const ENVELOPE_WINDOW_DOUBLE = 'double';
 
-    public function __construct(
-        string $apiKey,
-        ?string $version = null,
-        string $apiUrl = 'https://api.mysendingbox.com/',
-        int $timeout = 60,
-        bool $verifySsl = true,
-    ) {
-        parent::__construct($apiKey, $version, $apiUrl, $timeout, $verifySsl);
-    }
-
     /**
      * @param array<string, mixed> $variables
      * @param array<string, mixed> $metadata
@@ -62,7 +52,6 @@ class MysendingboxClient extends MysendingboxClientBase
         AddressPaper $to,
         string $color,
         string $postageType,
-        // TODO define $sourceFile PHP type hint string or file
         string $sourceFile,
         string $sourceFileType,
         // Not required

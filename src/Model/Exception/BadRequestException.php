@@ -6,6 +6,6 @@ namespace Mysendingbox\Model\Exception;
 
 use Exception;
 
-class BadRequestException extends Exception
+final class BadRequestException extends Exception
 {
 }

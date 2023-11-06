@@ -7,10 +7,11 @@ namespace Mysendingbox\Transformer;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Resource\FileResource;
 
-class FileResourceTransformer extends AbstractTransformer
+final class FileResourceTransformer extends AbstractTransformer
 {
     /**
      * @param array<string, mixed> $data
+     *
      * @throws TransformerException
      */
     public static function transform(array $data): FileResource

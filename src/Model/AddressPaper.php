@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox\Model;
 
-class AddressPaper implements \JsonSerializable
+final class AddressPaper implements \JsonSerializable
 {
     public function __construct(
         private string $line1,
