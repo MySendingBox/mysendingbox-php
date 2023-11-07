@@ -111,7 +111,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         $body['manage_returned_mail'] = $manageReturnedMail;
         $body['envelope'] = $envelope;
         $body['envelope_window'] = $envelopeWindow;
-        $body['print_s  ender_address'] = $printSenderAddress;
+        $body['print_sender_address'] = $printSenderAddress;
         $body['variables'] = $variables;
         $body['metadata'] = $metadata;
 
