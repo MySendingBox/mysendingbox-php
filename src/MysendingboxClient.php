@@ -84,38 +84,39 @@ final class MysendingboxClient extends MysendingboxClientBase
         ?array $variables = null,
         ?array $metadata = null,
     ): LetterResource {
-        $body = [];
-        $body['description'] = $description;
-        $body['to'] = $to->jsonSerialize();
-        $body['from'] = $from?->jsonSerialize();
-        $body['color'] = $color;
-        $body['postage_type'] = $postageType;
-        $body['source_file'] = $sourceFile;
-        $body['source_file_type'] = $sourceFileType;
-        $body['source_file_2'] = $sourceFile2;
-        $body['source_file_2_type'] = $sourceFileType2;
-        $body['source_file_3'] = $sourceFile3;
-        $body['source_file_3_type'] = $sourceFileType3;
-        $body['source_file_4'] = $sourceFile4;
-        $body['source_file_4_type'] = $sourceFileType4;
-        $body['source_file_5'] = $sourceFile5;
-        $body['source_file_5_type'] = $sourceFileType5;
-        $body['both_sides'] = $bothSides;
-        $body['staple'] = $staple;
-        $body['send_date'] = $sendDate?->format('Y-m-d');
-        $body['address_placement'] = $addressPlacement;
-        $body['postage_speed'] = $postageSpeed;
-        $body['pdf_margin'] = $pdfMargin;
-        $body['read_address_from_pdf'] = $readAddressFromPdf?->jsonSerialize();
-        $body['manage_delivery_proof'] = $manageDeliveryProof;
-        $body['manage_returned_mail'] = $manageReturnedMail;
-        $body['envelope'] = $envelope;
-        $body['envelope_window'] = $envelopeWindow;
-        $body['print_sender_address'] = $printSenderAddress;
-        $body['variables'] = $variables;
-        $body['metadata'] = $metadata;
+        $body = [
+            'description' => $description,
+            'to' => $to->jsonSerialize(),
+            'from' => $from?->jsonSerialize(),
+            'color' => $color,
+            'postage_type' => $postageType,
+            'source_file' => $sourceFile,
+            'source_file_type' => $sourceFileType,
+            'source_file_2' => $sourceFile2,
+            'source_file_2_type' => $sourceFileType2,
+            'source_file_3' => $sourceFile3,
+            'source_file_3_type' => $sourceFileType3,
+            'source_file_4' => $sourceFile4,
+            'source_file_4_type' => $sourceFileType4,
+            'source_file_5' => $sourceFile5,
+            'source_file_5_type' => $sourceFileType5,
+            'both_sides' => $bothSides,
+            'staple' => $staple,
+            'send_date' => $sendDate?->format('Y-m-d'),
+            'address_placement' => $addressPlacement,
+            'postage_speed' => $postageSpeed,
+            'pdf_margin' => $pdfMargin,
+            'read_address_from_pdf' => $readAddressFromPdf?->jsonSerialize(),
+            'manage_delivery_proof' => $manageDeliveryProof,
+            'manage_returned_mail' => $manageReturnedMail,
+            'envelope' => $envelope,
+            'envelope_window' => $envelopeWindow,
+            'print_sender_address' => $printSenderAddress,
+            'variables' => $variables,
+            'metadata' => $metadata,
+        ];
 
-        $data = $this->request('POST', 'letters', $body);
+        $data = $this->request('POST', 'letters/paper', $body);
 
         if (!is_array($data)) {
             throw new TransformerException();
