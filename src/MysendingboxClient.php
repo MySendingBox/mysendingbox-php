@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mysendingbox;
 
+use Mysendingbox\Model\AddressElectronic;
 use Mysendingbox\Model\AddressPaper;
 use Mysendingbox\Model\Exception\AuthorizationException;
 use Mysendingbox\Model\Exception\BadRequestException;
@@ -22,10 +23,13 @@ final class MysendingboxClient extends MysendingboxClientBase
     public const POSTAGE_SPEED_EXPRESS = 'express';
     public const POSTAGE_SPEED_D = 'D';
     public const POSTAGE_SPEED_D1 = 'D1';
-    public const POSTAGE_TYPE_ECOPLI = 'ecopli';
-    public const POSTAGE_TYPE_PRIORITAIRE = 'prioritaire';
-    public const POSTAGE_TYPE_LR = 'lr';
-    public const POSTAGE_TYPE_LRAR = 'lrar';
+    public const POSTAGE_TYPE_PAPER_ECOPLI = 'ecopli';
+    public const POSTAGE_TYPE_PAPER_PRIORITAIRE = 'prioritaire';
+    public const POSTAGE_TYPE_PAPER_LR = 'lr';
+    public const POSTAGE_TYPE_PAPER_LRAR = 'lrar';
+    public const POSTAGE_TYPE_ELECTRONIC_ERE = 'ere';
+    public const POSTAGE_TYPE_ELECTRONIC_LRE = 'lre';
+    public const POSTAGE_TYPE_ELECTRONIC_EMAIL = 'email';
     public const ELECTRONIC_STATUS_INDIVIDUAL = 'individual';
     public const ELECTRONIC_STATUS_PROFESSIONAL = 'professional';
     public const COLOR_BW = 'bw';
@@ -40,6 +44,8 @@ final class MysendingboxClient extends MysendingboxClientBase
     public const ENVELOPE_C6 = 'c6';
     public const ENVELOPE_WINDOW_SIMPLE = 'simple';
     public const ENVELOPE_WINDOW_DOUBLE = 'double';
+    public const ELECTRIC_CONTENT_TEXT = 'text';
+    public const ELECTRIC_CONTENT_HTML = 'html';
 
     /**
      * @param array<string, mixed> $variables
@@ -117,6 +123,59 @@ final class MysendingboxClient extends MysendingboxClientBase
         ];
 
         $data = $this->request('POST', 'letters/paper', $body);
+
+        if (!is_array($data)) {
+            throw new TransformerException();
+        }
+        return LetterResourceTransformer::transform($data);
+    }
+
+    public function createElectronicLetter(
+        AddressElectronic $to,
+        string $postageType,
+        string $sourceFile,
+        string $sourceFileType,
+        // Not required
+        ?string $description = null,
+        ?string $sourceFile2 = null,
+        ?string $sourceFileType2 = null,
+        ?string $sourceFile3 = null,
+        ?string $sourceFileType3 = null,
+        ?string $sourceFile4 = null,
+        ?string $sourceFileType4 = null,
+        ?string $sourceFile5 = null,
+        ?string $sourceFileType5 = null,
+        ?\DateTimeInterface $sendDate = null,
+        ?string $content = null,
+        ?string $contentType = null,
+        ?string $replyTo = null,
+        ?array $variables = null,
+        ?array $metadata = null,
+    ): LetterResource
+    {
+        $body = [
+            'description' => $description,
+            'to' => $to->jsonSerialize(),
+            'postage_type' => $postageType,
+            'source_file' => $sourceFile,
+            'source_file_type' => $sourceFileType,
+            'source_file_2' => $sourceFile2,
+            'source_file_2_type' => $sourceFileType2,
+            'source_file_3' => $sourceFile3,
+            'source_file_3_type' => $sourceFileType3,
+            'source_file_4' => $sourceFile4,
+            'source_file_4_type' => $sourceFileType4,
+            'source_file_5' => $sourceFile5,
+            'source_file_5_type' => $sourceFileType5,
+            'send_date' => $sendDate?->format('Y-m-d'),
+            'content' => $content,
+            'content_type' => $contentType,
+            'from' => $replyTo ? ['reply_to' => $replyTo] : null,
+            'variables' => $variables,
+            'metadata' => $metadata,
+        ];
+
+        $data = $this->request('POST', 'letters/electronic', $body);
 
         if (!is_array($data)) {
             throw new TransformerException();

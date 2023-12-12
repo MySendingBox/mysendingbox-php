@@ -14,7 +14,6 @@ final class AddressElectronic implements \JsonSerializable
         private ?string $company = null,
         private ?string $firstName = null,
         private ?string $lastName = null,
-        private ?string $replyTo = null,
     ) {
     }
 
@@ -29,7 +28,6 @@ final class AddressElectronic implements \JsonSerializable
             'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'reply_to' => $this->replyTo,
         ];
     }
 
@@ -56,10 +54,5 @@ final class AddressElectronic implements \JsonSerializable
     public function getLastName(): ?string
     {
         return $this->lastName;
-    }
-
-    public function getReplyTo(): ?string
-    {
-        return $this->replyTo;
     }
 }
