@@ -37,13 +37,13 @@ final class LetterResource
         private string $envelope,
         private bool $staple,
         private string $sendDate,
-        private ?FileResource $deliveryProof,
-        private ?FileResource $filingProof,
-        private ?FileResource $lostProof,
-        private ?FileResource $returnToSenderProof,
-        private ?FileResource $downloadProof,
-        private ?FileResource $rejectionProod,
-        private ?FileResource $negligenceProof,
+        private FileResource|string|null $deliveryProof,
+        private FileResource|string|null $filingProof,
+        private FileResource|string|null $lostProof,
+        private FileResource|string|null $returnToSenderProof,
+        private FileResource|string|null $downloadProof,
+        private FileResource|string|null $rejectionProof,
+        private FileResource|string|null $negligenceProof,
         private array $trackingEvents,
         private ?string $trackingNumber,
         private array $events,
@@ -183,37 +183,37 @@ final class LetterResource
         return $this->sendDate;
     }
 
-    public function getDeliveryProof(): ?FileResource
+    public function getDeliveryProof(): FileResource|string|null
     {
         return $this->deliveryProof;
     }
 
-    public function getFilingProof(): ?FileResource
+    public function getFilingProof(): FileResource|string|null
     {
         return $this->filingProof;
     }
 
-    public function getLostProof(): ?FileResource
+    public function getLostProof(): FileResource|string|null
     {
         return $this->lostProof;
     }
 
-    public function getReturnToSenderProof(): ?FileResource
+    public function getReturnToSenderProof(): FileResource|string|null
     {
         return $this->returnToSenderProof;
     }
 
-    public function getDownloadProof(): ?FileResource
+    public function getDownloadProof(): FileResource|string|null
     {
         return $this->downloadProof;
     }
 
-    public function getRejectionProod(): ?FileResource
+    public function getRejectionProof(): FileResource|string|null
     {
-        return $this->rejectionProod;
+        return $this->rejectionProof;
     }
 
-    public function getNegligenceProof(): ?FileResource
+    public function getNegligenceProof(): FileResource|string|null
     {
         return $this->negligenceProof;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mysendingbox\Transformer;
 
 use Mysendingbox\Model\Exception\TransformerException;
@@ -37,6 +39,5 @@ final class LettersRequestTransformer extends AbstractTransformer
             self::getAsString($infoData, 'requested_at'),
             $letters,
         );
-
     }
 }

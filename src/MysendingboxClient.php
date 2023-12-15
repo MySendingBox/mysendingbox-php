@@ -13,8 +13,10 @@ use Mysendingbox\Model\Exception\NetworkErrorException;
 use Mysendingbox\Model\Exception\ResourceNotFoundException;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Model\ReadAddressFromPdf;
+use Mysendingbox\Resource\AccountResource;
 use Mysendingbox\Resource\LetterResource;
 use Mysendingbox\Resource\LettersRequest;
+use Mysendingbox\Transformer\AccountResourceTransformer;
 use Mysendingbox\Transformer\LetterResourceTransformer;
 use Mysendingbox\Transformer\LettersRequestTransformer;
 
@@ -130,6 +132,17 @@ final class MysendingboxClient extends MysendingboxClientBase
         return LetterResourceTransformer::transform($data);
     }
 
+    /**
+     * @param array<string, mixed> $variables
+     * @param array<string, mixed> $metadata
+     *
+     * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     * @throws TransformerException
+     */
     public function createElectronicLetter(
         AddressElectronic $to,
         string $postageType,
@@ -151,8 +164,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         ?string $replyTo = null,
         ?array $variables = null,
         ?array $metadata = null,
-    ): LetterResource
-    {
+    ): LetterResource {
         $body = [
             'description' => $description,
             'to' => $to->jsonSerialize(),
@@ -236,5 +248,50 @@ final class MysendingboxClient extends MysendingboxClientBase
         }
 
         return LettersRequestTransformer::transform($data);
+    }
+
+    /**
+     * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     * @throws TransformerException
+     */
+    public function createAccount(
+        string $email,
+        string $name,
+        ?string $phone = null,
+        ?string $webhookUrl = null,
+        ?string $companyName = null,
+        ?string $addressLine1 = null,
+        ?string $addressLine2 = null,
+        ?string $addressPostalcode = null,
+        ?string $addressCity = null,
+        ?string $addressCountry = null,
+        ?string $siren = null,
+        ?int $cancellationWindow = null,
+    ): AccountResource {
+        $body = [
+            'email' => $email,
+            'name' => $name,
+            'phone' => $phone,
+            'webhook_url' => $webhookUrl,
+            'company_name' => $companyName,
+            'address_line1' => $addressLine1,
+            'address_line2' => $addressLine2,
+            'address_postalcode' => $addressPostalcode,
+            'address_city' => $addressCity,
+            'address_country' => $addressCountry,
+            'siren' => $siren,
+            'cancellation_window' => $cancellationWindow,
+        ];
+
+        $data = $this->request('POST', 'accounts', $body, serialization: 'json');
+
+        if (!is_array($data)) {
+            throw new TransformerException();
+        }
+        return AccountResourceTransformer::transform($data);
     }
 }

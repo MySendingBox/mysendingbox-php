@@ -6,10 +6,12 @@ namespace Mysendingbox\Transformer;
 
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Resource\AddressResource;
+use Mysendingbox\Resource\CompanyResource;
 use Mysendingbox\Resource\EventResource;
 use Mysendingbox\Resource\FileResource;
 use Mysendingbox\Resource\PriceResource;
 use Mysendingbox\Resource\TrackingEventResource;
+use Mysendingbox\Resource\UserResource;
 
 abstract class AbstractTransformer
 {
@@ -115,6 +117,22 @@ abstract class AbstractTransformer
     {
         if (!array_key_exists($key, $data) || (!is_int($data[$key]) && !is_float($data[$key]))) {
             throw new TransformerException($key, 'int|float', $data[$key] ?? null);
+        }
+
+        return $data[$key];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string>
+     *
+     * @throws TransformerException
+     */
+    public static function getAsArray(array $data, string $key): array
+    {
+        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
+            throw new TransformerException($key, 'array', $data[$key] ?? null);
         }
 
         return $data[$key];
@@ -268,5 +286,33 @@ abstract class AbstractTransformer
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @throws TransformerException
+     */
+    public static function getAsUserResource(array $data, string $key): UserResource
+    {
+        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
+            throw new TransformerException($key, 'array', $data[$key] ?? null);
+        }
+
+        return UserResourceTransformer::transform($data[$key]);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @throws TransformerException
+     */
+    public static function getAsCompanyResource(array $data, string $key): CompanyResource
+    {
+        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
+            throw new TransformerException($key, 'array', $data[$key] ?? null);
+        }
+
+        return CompanyResourceTransformer::transform($data[$key]);
     }
 }
