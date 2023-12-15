@@ -14,10 +14,12 @@ use Mysendingbox\Model\Exception\ResourceNotFoundException;
 use Mysendingbox\Model\Exception\TransformerException;
 use Mysendingbox\Model\ReadAddressFromPdf;
 use Mysendingbox\Resource\AccountResource;
+use Mysendingbox\Resource\InvoiceResource;
 use Mysendingbox\Resource\InvoicesRequest;
 use Mysendingbox\Resource\LetterResource;
 use Mysendingbox\Resource\LettersRequest;
 use Mysendingbox\Transformer\AccountResourceTransformer;
+use Mysendingbox\Transformer\InvoiceResourceTransformer;
 use Mysendingbox\Transformer\InvoicesRequestTransformer;
 use Mysendingbox\Transformer\LetterResourceTransformer;
 use Mysendingbox\Transformer\LettersRequestTransformer;
@@ -337,5 +339,23 @@ final class MysendingboxClient extends MysendingboxClientBase
         }
 
         return InvoicesRequestTransformer::transform($data);
+    }
+
+    /**
+     * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     * @throws TransformerException
+     */
+    public function getInvoice(string $id): InvoiceResource
+    {
+        $data = $this->request('GET', sprintf('invoices/%s', $id));
+
+        if (!is_array($data)) {
+            throw new TransformerException(expected: 'array', value: $data);
+        }
+        return InvoiceResourceTransformer::transform($data);
     }
 }
