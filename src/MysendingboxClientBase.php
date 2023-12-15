@@ -72,8 +72,12 @@ abstract class MysendingboxClientBase
     /**
      * @param array<string, mixed> $body
      */
-    protected function request(string $method, string $path, ?array $body = null): mixed
-    {
+    protected function request(
+        string $method,
+        string $path,
+        ?array $body = null,
+        string $serialization = RequestOptions::MULTIPART
+    ): mixed {
         $client = $this->getClient();
 
         $options = [
@@ -102,7 +106,16 @@ abstract class MysendingboxClientBase
                 case 'PUT':
                 case 'POST':
                 case 'PATCH':
-                    $options[RequestOptions::MULTIPART] = self::formatMultipartData($cleanParams);
+                    switch ($serialization) {
+                        case RequestOptions::MULTIPART:
+                            $options[RequestOptions::MULTIPART] = self::formatMultipartData($cleanParams);
+                            break;
+                        case RequestOptions::JSON:
+                            $options[RequestOptions::JSON] = $cleanParams;
+                            break;
+                        default:
+                            throw new BadRequestException('Unsupported serialization method');
+                    }
                     break;
             }
         }
