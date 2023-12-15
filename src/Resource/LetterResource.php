@@ -9,8 +9,8 @@ final class LetterResource
     /**
      * @param array<TrackingEventResource> $trackingEvents
      * @param array<EventResource> $events
-     * @param array<string, mixed> $metadata
-     * @param array<string, mixed> $variables
+     * @param array<string, mixed>|null $metadata
+     * @param array<string, mixed>|null $variables
      */
     public function __construct(
         private string $id,
