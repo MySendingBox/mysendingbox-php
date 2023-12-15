@@ -294,4 +294,25 @@ final class MysendingboxClient extends MysendingboxClientBase
         }
         return AccountResourceTransformer::transform($data);
     }
+
+    /**
+     * @throws AuthorizationException
+     * @throws BadRequestException
+     * @throws InternalErrorException
+     * @throws NetworkErrorException
+     * @throws ResourceNotFoundException
+     * @throws TransformerException
+     */
+    public function updateAccount(
+        string $accountId,
+        string $email,
+    ): bool {
+        $body = [
+            'email' => $email,
+        ];
+
+        $this->request('PUT', sprintf('accounts/%s', $accountId), $body, serialization: 'json');
+
+        return true;
+    }
 }
