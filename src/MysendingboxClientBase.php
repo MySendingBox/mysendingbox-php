@@ -26,7 +26,7 @@ abstract class MysendingboxClientBase
     public function __construct(
         private string $apiKey,
         private ?string $version = null,
-        private string $apiUrl = 'https://api.mysendingbox.com/',
+        private string $apiUrl = 'https://api.mysendingbox.fr/',
         private int $timeout = 60,
         private bool $verifySsl = true,
     ) {
