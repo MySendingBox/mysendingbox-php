@@ -6,13 +6,24 @@ namespace Mysendingbox\Resource;
 
 final class TrackingEventResource
 {
+    private string $id;
+    private string $status;
+    private string $message;
+    private string $date;
+    private string $createdAt;
+
     public function __construct(
-        private string $id,
-        private string $status,
-        private string $message,
-        private string $date,
-        private string $createdAt,
+        string $id,
+        string $status,
+        string $message,
+        string $date,
+        string $createdAt
     ) {
+        $this->createdAt = $createdAt;
+        $this->date = $date;
+        $this->message = $message;
+        $this->status = $status;
+        $this->id = $id;
     }
 
     public function getId(): string

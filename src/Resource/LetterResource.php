@@ -6,61 +6,200 @@ namespace Mysendingbox\Resource;
 
 final class LetterResource
 {
+    private string $id;
+    private string $channel;
+    private PriceResource $price;
+    private ?AddressResource $from;
+    private AddressResource $to;
+    private int $pageCount;
+    private int $sheetCount;
+    /**
+     * @var FileResource|string|null
+     */
+    private $fileResource;
+    private ?string $sourceFiletype;
+    private string $mode;
+    private string $color;
+    private bool $bothSides;
+    private string $postageType;
+    private string $postageSpeed;
+    private ?int $pdfMargin;
+    private bool $manageDeliveryProof;
+    private bool $manageReturnedMail;
+    private string $envelopeWindow;
+    private string $mailProvider;
+    private bool $printSenderAddress;
+    private string $addressPlacement;
+    private string $envelope;
+    private bool $staple;
+    private string $sendDate;
+    /**
+     * @var FileResource|string|null
+     */
+    private $deliveryProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $filingProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $lostProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $returnToSenderProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $downloadProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $rejectionProof;
+    /**
+     * @var FileResource|string|null
+     */
+    private $negligenceProof;
+    /**
+     * @var array<TrackingEventResource>
+     */
+    private array $trackingEvents;
+    private ?string $trackingNumber;
+    /**
+     * @var array<EventResource>
+     */
+    private array $events;
+    private string $createdAt;
+    private string $deletedAt;
+    private string $user;
+    private ?bool $error;
+    private ?bool $wrongAddress;
+    private string $createdFrom;
+    private string $object;
+    private ?string $description;
+    private ?string $content;
+    private ?string $contentType;
+    private ?bool $termOfUseValidation;
+    /**
+     * @var array<string, mixed>|null
+     */
+    private ?array $metadata;
+    /**
+     * @var array<string, mixed>|null
+     */
+    private ?array $variables;
+
     /**
      * @param array<TrackingEventResource> $trackingEvents
      * @param array<EventResource> $events
      * @param array<string, mixed>|null $metadata
      * @param array<string, mixed>|null $variables
+     * @param FileResource|string|null $fileResource
+     * @param FileResource|string|null $deliveryProof
+     * @param FileResource|string|null $filingProof
+     * @param FileResource|string|null $lostProof
+     * @param FileResource|string|null $returnToSenderProof
+     * @param FileResource|string|null $downloadProof
+     * @param FileResource|string|null $rejectionProof
+     * @param FileResource|string|null $negligenceProof
      */
     public function __construct(
-        private string $id,
-        private string $channel,
-        private PriceResource $price,
-        private ?AddressResource $from,
-        private AddressResource $to,
-        private int $pageCount,
-        private int $sheetCount,
-        private FileResource|string|null $fileResource,
-        private ?string $sourceFiletype,
-        private string $mode,
-        private string $color,
-        private bool $bothSides,
-        private string $postageType,
-        private string $postageSpeed,
-        private ?int $pdfMargin,
-        private bool $manageDeliveryProof,
-        private bool $manageReturnedMail,
-        private string $envelopeWindow,
-        private string $mailProvider,
-        private bool $printSenderAddress,
-        private string $addressPlacement,
-        private string $envelope,
-        private bool $staple,
-        private string $sendDate,
-        private FileResource|string|null $deliveryProof,
-        private FileResource|string|null $filingProof,
-        private FileResource|string|null $lostProof,
-        private FileResource|string|null $returnToSenderProof,
-        private FileResource|string|null $downloadProof,
-        private FileResource|string|null $rejectionProof,
-        private FileResource|string|null $negligenceProof,
-        private array $trackingEvents,
-        private ?string $trackingNumber,
-        private array $events,
-        private string $createdAt,
-        private string $deletedAt,
-        private string $user,
-        private ?bool $error,
-        private ?bool $wrongAddress,
-        private string $createdFrom,
-        private string $object,
-        private ?string $description,
-        private ?string $content,
-        private ?string $contentType,
-        private ?bool $termOfUseValidation,
-        private ?array $metadata,
-        private ?array $variables,
+        string $id,
+        string $channel,
+        PriceResource $price,
+        ?AddressResource $from,
+        AddressResource $to,
+        int $pageCount,
+        int $sheetCount,
+        $fileResource,
+        ?string $sourceFiletype,
+        string $mode,
+        string $color,
+        bool $bothSides,
+        string $postageType,
+        string $postageSpeed,
+        ?int $pdfMargin,
+        bool $manageDeliveryProof,
+        bool $manageReturnedMail,
+        string $envelopeWindow,
+        string $mailProvider,
+        bool $printSenderAddress,
+        string $addressPlacement,
+        string $envelope,
+        bool $staple,
+        string $sendDate,
+        $deliveryProof,
+        $filingProof,
+        $lostProof,
+        $returnToSenderProof,
+        $downloadProof,
+        $rejectionProof,
+        $negligenceProof,
+        array $trackingEvents,
+        ?string $trackingNumber,
+        array $events,
+        string $createdAt,
+        string $deletedAt,
+        string $user,
+        ?bool $error,
+        ?bool $wrongAddress,
+        string $createdFrom,
+        string $object,
+        ?string $description,
+        ?string $content,
+        ?string $contentType,
+        ?bool $termOfUseValidation,
+        ?array $metadata,
+        ?array $variables
     ) {
+        $this->variables = $variables;
+        $this->metadata = $metadata;
+        $this->termOfUseValidation = $termOfUseValidation;
+        $this->contentType = $contentType;
+        $this->content = $content;
+        $this->description = $description;
+        $this->object = $object;
+        $this->createdFrom = $createdFrom;
+        $this->wrongAddress = $wrongAddress;
+        $this->error = $error;
+        $this->user = $user;
+        $this->deletedAt = $deletedAt;
+        $this->createdAt = $createdAt;
+        $this->events = $events;
+        $this->trackingNumber = $trackingNumber;
+        $this->trackingEvents = $trackingEvents;
+        $this->negligenceProof = $negligenceProof;
+        $this->rejectionProof = $rejectionProof;
+        $this->downloadProof = $downloadProof;
+        $this->returnToSenderProof = $returnToSenderProof;
+        $this->lostProof = $lostProof;
+        $this->filingProof = $filingProof;
+        $this->deliveryProof = $deliveryProof;
+        $this->sendDate = $sendDate;
+        $this->staple = $staple;
+        $this->envelope = $envelope;
+        $this->addressPlacement = $addressPlacement;
+        $this->printSenderAddress = $printSenderAddress;
+        $this->mailProvider = $mailProvider;
+        $this->envelopeWindow = $envelopeWindow;
+        $this->manageReturnedMail = $manageReturnedMail;
+        $this->manageDeliveryProof = $manageDeliveryProof;
+        $this->pdfMargin = $pdfMargin;
+        $this->postageSpeed = $postageSpeed;
+        $this->postageType = $postageType;
+        $this->bothSides = $bothSides;
+        $this->color = $color;
+        $this->mode = $mode;
+        $this->sourceFiletype = $sourceFiletype;
+        $this->fileResource = $fileResource;
+        $this->sheetCount = $sheetCount;
+        $this->pageCount = $pageCount;
+        $this->to = $to;
+        $this->from = $from;
+        $this->price = $price;
+        $this->channel = $channel;
+        $this->id = $id;
     }
 
     public function getId(): string
@@ -98,7 +237,10 @@ final class LetterResource
         return $this->sheetCount;
     }
 
-    public function getFileResource(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getFileResource()
     {
         return $this->fileResource;
     }
@@ -183,37 +325,58 @@ final class LetterResource
         return $this->sendDate;
     }
 
-    public function getDeliveryProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getDeliveryProof()
     {
         return $this->deliveryProof;
     }
 
-    public function getFilingProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getFilingProof()
     {
         return $this->filingProof;
     }
 
-    public function getLostProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getLostProof()
     {
         return $this->lostProof;
     }
 
-    public function getReturnToSenderProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getReturnToSenderProof()
     {
         return $this->returnToSenderProof;
     }
 
-    public function getDownloadProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getDownloadProof()
     {
         return $this->downloadProof;
     }
 
-    public function getRejectionProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getRejectionProof()
     {
         return $this->rejectionProof;
     }
 
-    public function getNegligenceProof(): FileResource|string|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getNegligenceProof()
     {
         return $this->negligenceProof;
     }

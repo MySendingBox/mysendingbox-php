@@ -34,7 +34,7 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsBoolOrNull(array $data, string $key): bool|null
+    public static function getAsBoolOrNull(array $data, string $key): ?bool
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
@@ -65,7 +65,7 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsStringOrNull(array $data, string $key): string|null
+    public static function getAsStringOrNull(array $data, string $key): ?string
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
@@ -96,7 +96,7 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsIntOrNull(array $data, string $key): int|null
+    public static function getAsIntOrNull(array $data, string $key): ?int
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
@@ -111,9 +111,11 @@ abstract class AbstractTransformer
     /**
      * @param array<string, mixed> $data
      *
+     * @return int|float
+     *
      * @throws TransformerException
      */
-    public static function getAsNumber(array $data, string $key): int|float
+    public static function getAsNumber(array $data, string $key)
     {
         if (!array_key_exists($key, $data) || (!is_int($data[$key]) && !is_float($data[$key]))) {
             throw new TransformerException($key, 'int|float', $data[$key] ?? null);
@@ -161,7 +163,7 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsObjectOrNull(array $data, string $key): array|null
+    public static function getAsObjectOrNull(array $data, string $key): ?array
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
@@ -192,7 +194,7 @@ abstract class AbstractTransformer
      *
      * @throws TransformerException
      */
-    public static function getAsAddressResourceOrNull(array $data, string $key): AddressResource|null
+    public static function getAsAddressResourceOrNull(array $data, string $key): ?AddressResource
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;
@@ -207,9 +209,11 @@ abstract class AbstractTransformer
     /**
      * @param array<string, mixed> $data
      *
+     * @return FileResource|string|null
+     *
      * @throws TransformerException
      */
-    public static function getAsFileResourceOrNull(array $data, string $key): FileResource|string|null
+    public static function getAsFileResourceOrNull(array $data, string $key)
     {
         if (!array_key_exists($key, $data) || is_null($data[$key])) {
             return null;

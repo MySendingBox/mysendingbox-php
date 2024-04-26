@@ -94,12 +94,12 @@ final class MysendingboxClient extends MysendingboxClientBase
         ?string $envelopeWindow = null,
         ?bool $printSenderAddress = null,
         ?array $variables = null,
-        ?array $metadata = null,
+        ?array $metadata = null
     ): LetterResource {
         $body = [
             'description' => $description,
             'to' => $to->jsonSerialize(),
-            'from' => $from?->jsonSerialize(),
+            'from' => $from ? $from->jsonSerialize() : null,
             'color' => $color,
             'postage_type' => $postageType,
             'source_file' => $sourceFile,
@@ -114,11 +114,11 @@ final class MysendingboxClient extends MysendingboxClientBase
             'source_file_5_type' => $sourceFileType5,
             'both_sides' => $bothSides,
             'staple' => $staple,
-            'send_date' => $sendDate?->format('Y-m-d'),
+            'send_date' => $sendDate ? $sendDate->format('Y-m-d') : null,
             'address_placement' => $addressPlacement,
             'postage_speed' => $postageSpeed,
             'pdf_margin' => $pdfMargin,
-            'read_address_from_pdf' => $readAddressFromPdf?->jsonSerialize(),
+            'read_address_from_pdf' => $readAddressFromPdf ? $readAddressFromPdf->jsonSerialize() : null,
             'manage_delivery_proof' => $manageDeliveryProof,
             'manage_returned_mail' => $manageReturnedMail,
             'envelope' => $envelope,
@@ -167,7 +167,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         ?string $contentType = null,
         ?string $replyTo = null,
         ?array $variables = null,
-        ?array $metadata = null,
+        ?array $metadata = null
     ): LetterResource {
         $body = [
             'description' => $description,
@@ -183,7 +183,7 @@ final class MysendingboxClient extends MysendingboxClientBase
             'source_file_4_type' => $sourceFileType4,
             'source_file_5' => $sourceFile5,
             'source_file_5_type' => $sourceFileType5,
-            'send_date' => $sendDate?->format('Y-m-d'),
+            'send_date' => $sendDate ? $sendDate->format('Y-m-d') : null,
             'content' => $content,
             'content_type' => $contentType,
             'from' => $replyTo ? ['reply_to' => $replyTo] : null,
@@ -212,7 +212,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         $data = $this->request('GET', sprintf('letters/%s', $id));
 
         if (!is_array($data)) {
-            throw new TransformerException(expected: 'array', value: $data);
+            throw new TransformerException('response', 'array', $data);
         }
         return LetterResourceTransformer::transform($data);
     }
@@ -248,7 +248,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         $data = $this->request('GET', 'letters', $query);
 
         if (!is_array($data)) {
-            throw new TransformerException(expected: 'array', value: $data);
+            throw new TransformerException('response', 'array', $data);
         }
 
         return LettersRequestTransformer::transform($data);
@@ -274,7 +274,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         ?string $addressCity = null,
         ?string $addressCountry = null,
         ?string $siren = null,
-        ?int $cancellationWindow = null,
+        ?int $cancellationWindow = null
     ): AccountResource {
         $body = [
             'email' => $email,
@@ -291,7 +291,7 @@ final class MysendingboxClient extends MysendingboxClientBase
             'cancellation_window' => $cancellationWindow,
         ];
 
-        $data = $this->request('POST', 'accounts', $body, serialization: 'json');
+        $data = $this->request('POST', 'accounts', $body, 'json');
 
         if (!is_array($data)) {
             throw new TransformerException();
@@ -309,13 +309,13 @@ final class MysendingboxClient extends MysendingboxClientBase
      */
     public function updateAccount(
         string $accountId,
-        string $email,
+        string $email
     ): bool {
         $body = [
             'email' => $email,
         ];
 
-        $this->request('PUT', sprintf('accounts/%s', $accountId), $body, serialization: 'json');
+        $this->request('PUT', sprintf('accounts/%s', $accountId), $body, 'json');
 
         return true;
     }
@@ -335,7 +335,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         $data = $this->request('GET', 'invoices', $query);
 
         if (!is_array($data)) {
-            throw new TransformerException(expected: 'array', value: $data);
+            throw new TransformerException('response', 'array', $data);
         }
 
         return InvoicesRequestTransformer::transform($data);
@@ -354,7 +354,7 @@ final class MysendingboxClient extends MysendingboxClientBase
         $data = $this->request('GET', sprintf('invoices/%s', $id));
 
         if (!is_array($data)) {
-            throw new TransformerException(expected: 'array', value: $data);
+            throw new TransformerException('response', 'array', $data);
         }
         return InvoiceResourceTransformer::transform($data);
     }

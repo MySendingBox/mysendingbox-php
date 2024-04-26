@@ -6,13 +6,24 @@ namespace Mysendingbox\Model;
 
 final class ReadAddressFromPdf implements \JsonSerializable
 {
+    private bool $active;
+    private int $x;
+    private int $y;
+    private int $width;
+    private int $height;
+
     public function __construct(
-        private bool $active,
-        private int $x,
-        private int $y,
-        private int $width,
-        private int $height,
+        bool $active,
+        int $x,
+        int $y,
+        int $width,
+        int $height
     ) {
+        $this->height = $height;
+        $this->width = $width;
+        $this->y = $y;
+        $this->x = $x;
+        $this->active = $active;
     }
 
     /**

@@ -8,10 +8,13 @@ use Exception;
 
 final class TransformerException extends Exception
 {
+    /**
+     * @param mixed $value
+     */
     public function __construct(
         string $field = 'unspecified',
         string $expected = 'unspecified',
-        mixed $value = null,
+        $value = null,
         int $code = 0,
         ?\Throwable $previous = null
     ) {
@@ -20,7 +23,7 @@ final class TransformerException extends Exception
                 'An issue occured during transformation, field %s expects %s and got %s',
                 $field,
                 $expected,
-                is_object($value) ? $value::class : gettype($value)
+                is_object($value) ? get_class($value) : gettype($value)
             ),
             $code,
             $previous

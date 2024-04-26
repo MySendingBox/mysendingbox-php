@@ -6,10 +6,15 @@ namespace Mysendingbox\Resource;
 
 class AccountResource
 {
+    private UserResource $user;
+    private CompanyResource $companyResource;
+
     public function __construct(
-        private UserResource $user,
-        private CompanyResource $companyResource,
+        UserResource $user,
+        CompanyResource $companyResource
     ) {
+        $this->companyResource = $companyResource;
+        $this->user = $user;
     }
 
     public function getUser(): UserResource

@@ -6,20 +6,45 @@ namespace Mysendingbox\Resource;
 
 final class EventResource
 {
+    private string $id;
+    private string $name;
+    private string $category;
+    private string $description;
+    private ?string $letter;
+    private ?string $postcard;
+    private ?string $user;
+    private ?string $webhookLastErrorMessage;
+    private bool $webhookFailed;
+    private bool $webhookCalled;
+    private string $createdAt;
+    private string $updatedAt;
+
     public function __construct(
-        private string $id,
-        private string $name,
-        private string $category,
-        private string $description,
-        private ?string $letter,
-        private ?string $postcard,
-        private ?string $user,
-        private ?string $webhookLastErrorMessage,
-        private bool $webhookFailed,
-        private bool $webhookCalled,
-        private string $createdAt,
-        private string $updatedAt,
+        string $id,
+        string $name,
+        string $category,
+        string $description,
+        ?string $letter,
+        ?string $postcard,
+        ?string $user,
+        ?string $webhookLastErrorMessage,
+        bool $webhookFailed,
+        bool $webhookCalled,
+        string $createdAt,
+        string $updatedAt
     ) {
+        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt;
+        $this->webhookCalled = $webhookCalled;
+        $this->webhookFailed = $webhookFailed;
+        $this->webhookLastErrorMessage = $webhookLastErrorMessage;
+        $this->user = $user;
+        $this->postcard = $postcard;
+        $this->letter = $letter;
+        $this->description = $description;
+        $this->category = $category;
+        $this->name = $name;
+        $this->id = $id;
     }
 
     public function getId(): string

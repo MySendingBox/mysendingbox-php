@@ -6,17 +6,33 @@ namespace Mysendingbox\Resource;
 
 final class InvoicesRequest
 {
+    private int $total;
+    private int $limit;
+    private int $page;
+    private int $pages;
+    private string $requestedAt;
+    /**
+     * @var array<InvoiceResource>
+     */
+    private array $invoices;
+
     /**
      * @param array<InvoiceResource> $invoices
      */
     public function __construct(
-        private int $total,
-        private int $limit,
-        private int $page,
-        private int $pages,
-        private string $requestedAt,
-        private array $invoices,
+        int $total,
+        int $limit,
+        int $page,
+        int $pages,
+        string $requestedAt,
+        array $invoices
     ) {
+        $this->invoices = $invoices;
+        $this->requestedAt = $requestedAt;
+        $this->pages = $pages;
+        $this->page = $page;
+        $this->limit = $limit;
+        $this->total = $total;
     }
 
     public function getTotal(): int

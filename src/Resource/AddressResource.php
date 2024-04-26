@@ -6,21 +6,48 @@ namespace Mysendingbox\Resource;
 
 final class AddressResource
 {
+    private ?string $name;
+    private ?string $company;
+    private ?string $line1;
+    private ?string $line2;
+    private ?string $line3;
+    private ?string $city;
+    private ?string $postalCode;
+    private ?string $country;
+    private ?string $status;
+    private ?string $email;
+    private ?string $firstName;
+    private ?string $lastName;
+    private ?string $replyTo;
+
     public function __construct(
-        private ?string $name,
-        private ?string $company,
-        private ?string $line1,
-        private ?string $line2,
-        private ?string $line3,
-        private ?string $city,
-        private ?string $postalCode,
-        private ?string $country,
-        private ?string $status,
-        private ?string $email,
-        private ?string $firstName,
-        private ?string $lastName,
-        private ?string $replyTo,
+        ?string $name,
+        ?string $company,
+        ?string $line1,
+        ?string $line2,
+        ?string $line3,
+        ?string $city,
+        ?string $postalCode,
+        ?string $country,
+        ?string $status,
+        ?string $email,
+        ?string $firstName,
+        ?string $lastName,
+        ?string $replyTo
     ) {
+        $this->replyTo = $replyTo;
+        $this->lastName = $lastName;
+        $this->firstName = $firstName;
+        $this->email = $email;
+        $this->status = $status;
+        $this->country = $country;
+        $this->postalCode = $postalCode;
+        $this->city = $city;
+        $this->line3 = $line3;
+        $this->line2 = $line2;
+        $this->line1 = $line1;
+        $this->company = $company;
+        $this->name = $name;
     }
 
     public function getName(): ?string

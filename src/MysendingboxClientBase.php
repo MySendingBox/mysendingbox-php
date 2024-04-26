@@ -22,15 +22,25 @@ abstract class MysendingboxClientBase
     public const CLIENT_VERSION = '1.0.0';
 
     protected ?Client $client = null;
+    private string $apiKey;
+    private ?string $version = null;
+    private string $apiUrl = 'https://api.mysendingbox.fr/';
+    private int $timeout = 60;
+    private bool $verifySsl = true;
 
     public function __construct(
-        private string $apiKey,
-        private ?string $version = null,
-        private string $apiUrl = 'https://api.mysendingbox.fr/',
-        private int $timeout = 60,
-        private bool $verifySsl = true,
+        string $apiKey,
+        ?string $version = null,
+        string $apiUrl = 'https://api.mysendingbox.fr/',
+        int $timeout = 60,
+        bool $verifySsl = true
     ) {
-        if (!is_string($this->apiKey) || $this->apiKey === '') {
+        $this->verifySsl = $verifySsl;
+        $this->timeout = $timeout;
+        $this->apiUrl = $apiUrl;
+        $this->version = $version;
+        $this->apiKey = $apiKey;
+        if ($this->apiKey === '') {
             throw new InvalidArgumentException('API Key must be a non-empty string.');
         }
     }
@@ -71,13 +81,15 @@ abstract class MysendingboxClientBase
 
     /**
      * @param array<string, mixed> $body
+     *
+     * @return mixed
      */
     protected function request(
         string $method,
         string $path,
         ?array $body = null,
         string $serialization = RequestOptions::MULTIPART
-    ): mixed {
+    ) {
         $client = $this->getClient();
 
         $options = [

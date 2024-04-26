@@ -7,23 +7,53 @@ namespace Mysendingbox\Resource;
 class UserResource
 {
     /**
+     * @var array<string, mixed>
+     */
+    private array $emailNotifications;
+    private bool $admin;
+    private bool $activated;
+    private string $id;
+    private string $email;
+    private string $name;
+    private ?string $phone;
+    private string $role;
+    private bool $invitePending;
+    private string $inviteToken;
+    private string $company;
+    private string $createdAt;
+    private string $updatedAt;
+
+    /**
      * @param array<string, mixed> $emailNotifications
      */
     public function __construct(
-        private array $emailNotifications,
-        private bool $admin,
-        private bool $activated,
-        private string $id,
-        private string $email,
-        private string $name,
-        private ?string $phone,
-        private string $role,
-        private bool $invitePending,
-        private string $inviteToken,
-        private string $company,
-        private string $createdAt,
-        private string $updatedAt,
+        array $emailNotifications,
+        bool $admin,
+        bool $activated,
+        string $id,
+        string $email,
+        string $name,
+        ?string $phone,
+        string $role,
+        bool $invitePending,
+        string $inviteToken,
+        string $company,
+        string $createdAt,
+        string $updatedAt
     ) {
+        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt;
+        $this->company = $company;
+        $this->inviteToken = $inviteToken;
+        $this->invitePending = $invitePending;
+        $this->role = $role;
+        $this->phone = $phone;
+        $this->name = $name;
+        $this->email = $email;
+        $this->id = $id;
+        $this->activated = $activated;
+        $this->admin = $admin;
+        $this->emailNotifications = $emailNotifications;
     }
 
     /**

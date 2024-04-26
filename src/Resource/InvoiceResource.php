@@ -6,29 +6,76 @@ namespace Mysendingbox\Resource;
 
 class InvoiceResource
 {
+    private string $id;
+    private int $invoiceNumber;
+    private string $invoiceDate;
+    private string $dueDate;
+    private ?string $name;
+    private string $paymentDate;
+    private string $paymentType;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $paymentInformations;
+    private int $tva;
+    private string $country;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $invoiceLines;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $total;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $discount;
+    private string $status;
+    /**
+     * @var FileResource|string|null
+     */
+    private $file;
+
     /**
      * @param array<string, mixed> $paymentInformations
      * @param array<string, mixed> $invoiceLines
      * @param array<string, mixed> $total
      * @param array<string, mixed> $discount
+     * @param FileResource|string|null $file
      */
     public function __construct(
-        private string $id,
-        private int $invoiceNumber,
-        private string $invoiceDate,
-        private string $dueDate,
-        private ?string $name,
-        private string $paymentDate,
-        private string $paymentType,
-        private array $paymentInformations,
-        private int $tva,
-        private string $country,
-        private array $invoiceLines,
-        private array $total,
-        private array $discount,
-        private string $status,
-        private FileResource|string|null $file,
+        string $id,
+        int $invoiceNumber,
+        string $invoiceDate,
+        string $dueDate,
+        ?string $name,
+        string $paymentDate,
+        string $paymentType,
+        array $paymentInformations,
+        int $tva,
+        string $country,
+        array $invoiceLines,
+        array $total,
+        array $discount,
+        string $status,
+        $file
     ) {
+        $this->file = $file;
+        $this->status = $status;
+        $this->discount = $discount;
+        $this->total = $total;
+        $this->invoiceLines = $invoiceLines;
+        $this->country = $country;
+        $this->tva = $tva;
+        $this->paymentInformations = $paymentInformations;
+        $this->paymentType = $paymentType;
+        $this->paymentDate = $paymentDate;
+        $this->name = $name;
+        $this->dueDate = $dueDate;
+        $this->invoiceDate = $invoiceDate;
+        $this->invoiceNumber = $invoiceNumber;
+        $this->id = $id;
     }
 
     public function getId(): string
@@ -113,7 +160,10 @@ class InvoiceResource
         return $this->status;
     }
 
-    public function getFile(): string|FileResource|null
+    /**
+     * @return FileResource|string|null
+     */
+    public function getFile()
     {
         return $this->file;
     }

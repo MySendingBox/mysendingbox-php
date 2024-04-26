@@ -8,13 +8,24 @@ use Mysendingbox\MysendingboxClient;
 
 final class AddressElectronic implements \JsonSerializable
 {
+    private string $email;
+    private ?string $status = MysendingboxClient::ELECTRONIC_STATUS_INDIVIDUAL;
+    private ?string $company = null;
+    private ?string $firstName = null;
+    private ?string $lastName = null;
+
     public function __construct(
-        private string $email,
-        private ?string $status = MysendingboxClient::ELECTRONIC_STATUS_INDIVIDUAL,
-        private ?string $company = null,
-        private ?string $firstName = null,
-        private ?string $lastName = null,
+        string $email,
+        ?string $status = MysendingboxClient::ELECTRONIC_STATUS_INDIVIDUAL,
+        ?string $company = null,
+        ?string $firstName = null,
+        ?string $lastName = null
     ) {
+        $this->lastName = $lastName;
+        $this->firstName = $firstName;
+        $this->company = $company;
+        $this->status = $status;
+        $this->email = $email;
     }
 
     /**

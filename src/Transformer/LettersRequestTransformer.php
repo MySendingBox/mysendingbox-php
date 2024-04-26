@@ -19,13 +19,13 @@ final class LettersRequestTransformer extends AbstractTransformer
         $infoData = self::getAsObject($data, 'info');
 
         if (!array_key_exists('letters', $data) || !is_array($data['letters'])) {
-            throw new TransformerException(expected: 'array', value: $data['data']);
+            throw new TransformerException('data', 'array', $data['data']);
         }
 
         $letters = [];
         foreach ($data['letters'] as $datum) {
             if (!is_array($datum)) {
-                throw new TransformerException(expected: 'array', value: $datum);
+                throw new TransformerException("data[letters][$datum]", 'array', $datum);
             }
 
             $letters[] = LetterResourceTransformer::transform($datum);

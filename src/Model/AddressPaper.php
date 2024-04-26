@@ -6,16 +6,33 @@ namespace Mysendingbox\Model;
 
 final class AddressPaper implements \JsonSerializable
 {
+    private string $line1;
+    private string $city;
+    private string $postalCode;
+    private string $country;
+    private ?string $name = null;
+    private ?string $company = null;
+    private ?string $line2 = null;
+    private ?string $line3 = null;
+
     public function __construct(
-        private string $line1,
-        private string $city,
-        private string $postalCode,
-        private string $country,
-        private ?string $name = null,
-        private ?string $company = null,
-        private ?string $line2 = null,
-        private ?string $line3 = null,
+        string $line1,
+        string $city,
+        string $postalCode,
+        string $country,
+        ?string $name = null,
+        ?string $company = null,
+        ?string $line2 = null,
+        ?string $line3 = null
     ) {
+        $this->line3 = $line3;
+        $this->line2 = $line2;
+        $this->company = $company;
+        $this->name = $name;
+        $this->country = $country;
+        $this->postalCode = $postalCode;
+        $this->city = $city;
+        $this->line1 = $line1;
     }
 
     /**

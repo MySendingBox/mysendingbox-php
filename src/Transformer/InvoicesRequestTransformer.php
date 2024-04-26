@@ -19,13 +19,13 @@ final class InvoicesRequestTransformer extends AbstractTransformer
         $infoData = self::getAsObject($data, 'info');
 
         if (!array_key_exists('invoices', $data) || !is_array($data['invoices'])) {
-            throw new TransformerException(expected: 'array', value: $data['data']);
+            throw new TransformerException('data', 'array', $data['data']);
         }
 
         $invoices = [];
         foreach ($data['invoices'] as $datum) {
             if (!is_array($datum)) {
-                throw new TransformerException(expected: 'array', value: $datum);
+                throw new TransformerException("data[invoices][$datum]", 'array', $datum);
             }
 
             $invoices[] = InvoiceResourceTransformer::transform($datum);
