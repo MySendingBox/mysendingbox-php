@@ -80,7 +80,7 @@ final class LetterResource
     private ?string $description;
     private ?string $content;
     private ?string $contentType;
-    private ?bool $termOfUseValidation;
+    private ?string $termOfUseValidation;
     /**
      * @var array<string, mixed>|null
      */
@@ -149,7 +149,7 @@ final class LetterResource
         ?string $description,
         ?string $content,
         ?string $contentType,
-        ?bool $termOfUseValidation,
+        ?string $termOfUseValidation,
         ?array $metadata,
         ?array $variables
     ) {
@@ -452,7 +452,7 @@ final class LetterResource
         return $this->contentType;
     }
 
-    public function isTermOfUseValidation(): ?bool
+    public function getTermOfUseValidation(): ?string
     {
         return $this->termOfUseValidation;
     }
