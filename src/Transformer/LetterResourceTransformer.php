@@ -61,7 +61,7 @@ final class LetterResourceTransformer extends AbstractTransformer
             self::getAsStringOrNull($data, 'description'),
             self::getAsStringOrNull($data, 'content'),
             self::getAsStringOrNull($data, 'content_type'),
-            self::getAsBoolOrNull($data, 'term_of_use_validation'),
+            self::getAsStringOrNull($data, 'term_of_use_validation'),
             self::getAsObjectOrNull($data, 'metadata'),
             self::getAsObjectOrNull($data, 'variables')
         );
