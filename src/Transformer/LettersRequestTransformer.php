@@ -32,7 +32,6 @@ final class LettersRequestTransformer extends AbstractTransformer
         }
 
         return new LettersRequest(
-            self::getAsInt($infoData, 'total'),
             self::getAsInt($infoData, 'limit'),
             self::getAsInt($infoData, 'offset'),
             self::getAsInt($infoData, 'count'),

@@ -6,7 +6,6 @@ namespace Mysendingbox\Resource;
 
 final class LettersRequest
 {
-    private int $total;
     private int $limit;
     private int $offset;
     private int $count;
@@ -20,7 +19,6 @@ final class LettersRequest
      * @param array<LetterResource> $letters
      */
     public function __construct(
-        int $total,
         int $limit,
         int $offset,
         int $count,
@@ -32,12 +30,6 @@ final class LettersRequest
         $this->count = $count;
         $this->offset = $offset;
         $this->limit = $limit;
-        $this->total = $total;
-    }
-
-    public function getTotal(): int
-    {
-        return $this->total;
     }
 
     public function getLimit(): int

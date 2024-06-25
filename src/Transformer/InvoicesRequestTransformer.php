@@ -32,10 +32,8 @@ final class InvoicesRequestTransformer extends AbstractTransformer
         }
 
         return new InvoicesRequest(
-            self::getAsInt($infoData, 'total'),
             self::getAsInt($infoData, 'limit'),
             self::getAsInt($infoData, 'page'),
-            self::getAsInt($infoData, 'pages'),
             self::getAsString($infoData, 'requested_at'),
             $invoices,
         );
